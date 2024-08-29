@@ -1,0 +1,55 @@
+/* App.css */
+
+.appContainer {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center horizontally */
+  height: 100vh; /* Full viewport height */
+  padding: 20px; /* Add padding around the container */
+  box-sizing: border-box; /* Ensure padding is included in total height */
+}
+
+.appTitle {
+  margin-bottom: 20px; /* Space below the title */
+  text-align: center; /* Center text inside the container */
+}
+
+.box {
+  flex: 1;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 500px; /* Set a fixed width or adjust as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.box h2 {
+  margin-bottom: 10px;
+  padding-right: 30px; 
+  position: relative; /* For positioning the edit icon */
+}
+
+.editIcon {
+  position: absolute;
+  top: 50%; /* Center vertically relative to the title */
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+}
