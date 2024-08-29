@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./home";
-import Form from "./component/form";
+import Home from "./pages/home";
+import Create from "./pages/create";
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:4000";
@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/form" element={<Form />} />
+      <Route path="/create" element={<Create />} />
     </Routes>
   );
 }

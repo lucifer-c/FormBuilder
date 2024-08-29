@@ -1,11 +1,12 @@
-import "./App.css";
+import "../App.css";
 import { useNavigate } from "react-router-dom";
+import CreatedForm from "../component/createdForms";
 
 function Home() {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate("/form");
+    navigate("/create");
   };
 
   return (
@@ -16,6 +17,7 @@ function Home() {
         <button onClick={handleButtonClick}>CREATE NEW FORM</button>
         <hr className="divider" />
       </div>
+      <CreatedForm />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import "../App.css";
 
-const Form = () => {
+const Create = () => {
   const navigate = useNavigate();
 
   const [showTextField, setShowTextField] = useState(false);
@@ -16,6 +16,7 @@ const Form = () => {
   const [selectedFieldType, setSelectedFieldType] = useState("");
   const [selectedFieldIndex, setSelectedFieldIndex] = useState(null); // Track which field is being edited
   const [editShowFields, setEditShowFields] = useState(false);
+  const [error, setError] = useState("");
 
   const handleEditClick = () => {
     if (title === "Untitled") {
@@ -47,7 +48,27 @@ const Form = () => {
   };
 
   const handleCreateFormClick = async () => {
-    console.log("payload---->", title, form);
+    if (!title.trim()) {
+      setError("Form title cannot be empty.");
+      return;
+    }
+    const emptyField = form.some((field) => !field.inputTitle.trim());
+    if (emptyField) {
+      setError("Fill out the empty fields or delete the empty fields.");
+      return;
+    }
+
+    if (form.length === 0) {
+      setError("You should create atleast one field.");
+      return;
+    }
+
+    if (!form) {
+      setError("Fill out the empty fields or delete the empty fields.");
+      return;
+    }
+
+    setError("");
 
     try {
       const res = await axios.post("/formMaster", {
@@ -229,7 +250,9 @@ const Form = () => {
           )}
         </div>
       </div>
-
+      <div style={{ textAlign: "center", color: "red", marginBottom: "10px" }}>
+        {error && <p>{error}</p>}
+      </div>
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <button onClick={handleCreateFormClick}>Create Form</button>
       </div>
@@ -237,4 +260,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default Create;
