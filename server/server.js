@@ -15,6 +15,8 @@ app.use(cors());
 app.post("/formMaster", controller.buildForm);
 app.get("/getCretedForm", controller.getForms);
 app.delete("/deleteForm/:id", controller.deleteForm);
+app.get("/getForm/:id", controller.getForm);
+app.post("/createForm", controller.createForm);
 
 //////DB Connection//////////
 

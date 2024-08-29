@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 import "../App.css";
 
 const Create = () => {
   const navigate = useNavigate();
 
   const [showTextField, setShowTextField] = useState(false);
-  const [title, setTitle] = useState("Untitled"); // State for the first box title
-  const [showInputTypes, setShowInputTypes] = useState(false); // State for showing input type buttons
-  const [showFields, setShowFields] = useState(false); // State to toggle fields visibility
-  const [fields, setFields] = useState([]); // State to manage fields
-  const [form, setForm] = useState([]); // State to store the form data with inputType and inputTitle
+  const [title, setTitle] = useState("Untitled");
+  const [showInputTypes, setShowInputTypes] = useState(false);
+  const [showFields, setShowFields] = useState(false);
+  const [fields, setFields] = useState([]);
+  const [form, setForm] = useState([]);
   const [selectedFieldType, setSelectedFieldType] = useState("");
-  const [selectedFieldIndex, setSelectedFieldIndex] = useState(null); // Track which field is being edited
+  const [selectedFieldIndex, setSelectedFieldIndex] = useState(null);
   const [editShowFields, setEditShowFields] = useState(false);
   const [error, setError] = useState("");
 
@@ -27,19 +27,17 @@ const Create = () => {
 
   const handleTitleChange = (event) => {
     const newValue = event.target.value;
-    setTitle(newValue); // Update the title in the first box as input value changes
+    setTitle(newValue);
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
     if (selectedFieldIndex !== null) {
-      // Update the form state directly
       const updatedForm = form.map((item, index) =>
         index === selectedFieldIndex ? { ...item, inputTitle: value } : item
       );
       setForm(updatedForm);
 
-      // Update the fields state to reflect the new value
       const updatedFields = fields.map((field, index) =>
         index === selectedFieldIndex ? { ...field, value } : field
       );
@@ -85,11 +83,11 @@ const Create = () => {
   };
 
   const handleAddInputClick = () => {
-    setShowFields(!showFields); // Toggle fields visibility
+    setShowFields(!showFields);
     if (!showFields) {
-      setShowInputTypes(true); // Show input type buttons when opening fields
+      setShowInputTypes(true);
     } else {
-      setShowInputTypes(false); // Hide input type buttons when closing fields
+      setShowInputTypes(false);
     }
   };
 
@@ -99,9 +97,8 @@ const Create = () => {
       return;
     }
     const newField = { type, value: "" };
-    setFields([...fields, newField]); // Add new field to the list
+    setFields([...fields, newField]);
 
-    // Update the form state with the new field
     setForm([...form, { inputType: type, inputTitle: "" }]);
   };
 
@@ -115,10 +112,10 @@ const Create = () => {
 
   const handleFieldDelete = (index) => {
     const updatedFields = fields.filter((_, i) => i !== index);
-    setFields(updatedFields); // Remove field at index
+    setFields(updatedFields);
 
     const updatedForm = form.filter((_, i) => i !== index);
-    setForm(updatedForm); // Remove corresponding form data
+    setForm(updatedForm);
   };
 
   return (
@@ -140,7 +137,7 @@ const Create = () => {
           <h2>
             {title}
             <span className="editIcon" onClick={handleEditClick}>
-              ✏️ {/* Simple edit icon using emoji */}
+              ✏️
             </span>
           </h2>
           {/* Render fields dynamically */}
@@ -148,15 +145,15 @@ const Create = () => {
             style={{
               marginTop: "10px",
               display: "flex",
-              flexWrap: "wrap", // Allow wrapping of fields
-              gap: "10px", // Add space between the fields
+              flexWrap: "wrap",
+              gap: "10px",
             }}
           >
             {fields.map((field, index) => (
               <div
                 key={index}
                 style={{
-                  flex: "0 0 calc(50% - 10px)", // Two columns with spacing
+                  flex: "0 0 calc(50% - 10px)",
                   display: "flex",
                   alignItems: "center",
                 }}
@@ -164,23 +161,23 @@ const Create = () => {
                 <input
                   name={field.type.toLowerCase()}
                   placeholder="Title"
-                  value={field.value} // Set the input field value
-                  readOnly // This makes the input field read-only
+                  value={field.value}
+                  readOnly
                   style={{
-                    flex: "1", // Take up available space within the column
+                    flex: "1",
                   }}
                 />
                 <span
                   onClick={() => handleFieldEdit(index)}
                   style={{ marginLeft: "5px" }}
                 >
-                  ✏️ {/* Simple edit icon using emoji */}
+                  ✏️
                 </span>
                 <span
                   onClick={() => handleFieldDelete(index)}
-                  style={{ marginLeft: "5px" }}
+                  style={{ marginLeft: "5px", cursor: "pointer" }}
                 >
-                  X {/* Simple delete icon using emoji */}
+                  <DeleteIcon />
                 </span>
               </div>
             ))}
@@ -190,7 +187,7 @@ const Create = () => {
               {showFields ? "Close Add Input" : "Add Input"}
             </button>
           </div>
-          {/* Render dynamically created input type buttons in the first box */}
+
           {showFields && showInputTypes && (
             <div
               style={{
@@ -227,7 +224,7 @@ const Create = () => {
               type="text"
               placeholder="Enter Text"
               className="inputField"
-              value={title} // The title value
+              value={title}
               onChange={handleTitleChange}
             />
           ) : editShowFields && selectedFieldType ? (
@@ -237,9 +234,7 @@ const Create = () => {
                 type="text"
                 placeholder="Enter Text"
                 className="inputField"
-                value={
-                  fields[selectedFieldIndex]?.value || "" // Display the current value of the selected field
-                }
+                value={fields[selectedFieldIndex]?.value || ""}
                 onChange={handleInputChange}
               />
             </>

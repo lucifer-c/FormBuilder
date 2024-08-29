@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const CreatedForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +26,10 @@ const CreatedForm = () => {
     }
   };
 
+  const handleView = (id) => {
+    navigate(`/ViewForm/${id}`);
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/deleteForm/${id}`);
@@ -38,12 +44,23 @@ const CreatedForm = () => {
   }
 
   return (
-    <div className="appContainer">
+    <div
+      className="appContainer"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+        padding: "20px",
+      }}
+    >
       {formData ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="center">
           {formData.map((form) => (
             <Grid item xs={12} sm={6} md={4} key={form._id}>
-              <Card>
+              <Card style={{ width: "300px", margin: "auto" }}>
+                {" "}
+                {/* Fixed width and center alignment */}
                 <CardContent>
                   <Typography variant="h5" component="div">
                     {form.title}
@@ -55,10 +72,11 @@ const CreatedForm = () => {
                         marginRight: "10px",
                         backgroundColor: "green",
                         color: "white",
-                        padding: "6px 12px", // Adjust padding for smaller button
-                        fontSize: "0.75rem", // Smaller text size
+                        padding: "6px 12px",
+                        fontSize: "0.75rem",
                         borderRadius: "59px",
                       }}
+                      onClick={() => handleView(form._id)}
                     >
                       View
                     </Button>

@@ -5,8 +5,9 @@ const UserDataSchema = new mongoose.Schema({
 
   fields: [
     {
+      inputTitle: String,
       inputType: String,
-      inputType: String,
+      inputValue: String,
     },
   ],
 });
